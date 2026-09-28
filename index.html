@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="">
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>馨恒泰家居 - 全球跨境家居供应链</title>
+  <link href="./assets/fonts/inter.css" rel="stylesheet">
+  <link href="./assets/fonts/material-symbols.css" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="./assets/vendor/tailwindcss.js"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#13402c",
+            "primary-container": "#2c5742",
+            "on-primary": "#ffffff",
+            "on-primary-container": "#9dcbb0",
+            "primary-fixed": "#beedd1",
+            "primary-fixed-dim": "#a2d1b6",
+            "on-primary-fixed": "#002113",
+            "on-primary-fixed-variant": "#244f3a",
+            "secondary": "#57615b",
+            "secondary-container": "#dbe5de",
+            "on-secondary": "#ffffff",
+            "on-secondary-container": "#5d6761",
+            "secondary-fixed": "#dbe5de",
+            "secondary-fixed-dim": "#bfc9c2",
+            "tertiary": "#2c3b32",
+            "tertiary-container": "#435249",
+            "on-tertiary": "#ffffff",
+            "on-tertiary-container": "#b3c5b9",
+            "surface": "#f0fdf3",
+            "surface-dim": "#d0ddd4",
+            "surface-bright": "#f0fdf3",
+            "surface-variant": "#d9e6dc",
+            "surface-container": "#e4f1e7",
+            "surface-container-low": "#eaf7ed",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-high": "#dfebe2",
+            "surface-container-highest": "#d9e6dc",
+            "on-surface": "#131e18",
+            "on-surface-variant": "#414943",
+            "outline": "#717973",
+            "outline-variant": "#c1c8c1",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "on-error": "#ffffff",
+            "inverse-surface": "#28332d",
+            "inverse-on-surface": "#e7f4ea",
+            "inverse-primary": "#a2d1b6"
+          },
+          borderRadius: {
+            DEFAULT: "0.125rem",
+            sm: "0.125rem",
+            lg: "0.25rem",
+            xl: "0.5rem",
+            "2xl": "0.75rem",
+            full: "9999px"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"],
+            body: ["Inter", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      overscroll-behavior: none;
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+  </style>
+
+  <!-- React & Router CDN Dependencies -->
+  <script src="./assets/vendor/react.development.js"></script>
+  <script src="./assets/vendor/react-dom.development.js"></script>
+  <script src="./assets/vendor/history.development.js"></script>
+  <script src="./assets/vendor/react-router.development.js"></script>
+  <script src="./assets/vendor/react-router-dom.development.js"></script>
+  <script src="./assets/vendor/babel.min.js"></script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface antialiased flex flex-col min-h-screen">
+  <div id="root" class="flex flex-col min-h-screen"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const { createRoot } = ReactDOM;
+    const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+    const LOGO_URL = "./assets/images/image-01.jpg";
+    const HERO_IMAGE = "./assets/images/image-02.jpg";
+    const TEAM_IMAGE = "./assets/images/image-03.jpg";
+
+    // Common Toast Alert Component
+    function Toast({ message, visible }) {
+      if (!visible) return null;
+      return (
+        <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-primary text-on-primary px-4 py-2 rounded-lg shadow-xl text-sm flex items-center gap-2 transition-all">
+          <span className="material-symbols-outlined text-[18px]">check_circle</span>
+          <span>{message}</span>
+        </div>
+      );
+    }
+
+    // Shared Header
+    function Header({ onOpenMobileMenu }) {
+      const location = useLocation();
+      const path = location.pathname;
+
+      return (
+        <header className="fixed top-0 left-0 right-0 w-full z-40 bg-surface-container-lowest/95 backdrop-blur-md border-b border-secondary-fixed shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
+          <div className="max-w-7xl mx-auto h-16 md:h-20 px-4 md:px-8 lg:px-12 flex items-center justify-between">
+            {/* Logo */}
+            <Link to="/" className="flex items-center gap-3">
+              <img alt="馨恒泰家居" className="h-8 md:h-9 w-auto object-contain" src={LOGO_URL} />
+              <div className="flex flex-col">
+                <span className="text-base md:text-lg font-bold text-primary leading-tight tracking-tight">馨恒泰家居</span>
+                <span className="text-[10px] text-secondary leading-none uppercase tracking-wider font-semibold">XHT Home</span>
+              </div>
+            </Link>
+
+            {/* Desktop Navigation Links */}
+            <nav className="hidden md:flex items-center gap-8">
+              <Link
+                to="/"
+                className={`text-sm md:text-base transition-colors ${path === '/' ? 'text-primary font-semibold' : 'text-on-surface-variant hover:text-primary'}`}
+              >
+                首页
+              </Link>
+              <Link
+                to="/about"
+                className={`text-sm md:text-base transition-colors ${path === '/about' ? 'text-primary font-semibold' : 'text-on-surface-variant hover:text-primary'}`}
+              >
+                关于我们
+              </Link>
+              <Link
+                to="/careers"
+                className={`text-sm md:text-base transition-colors ${path === '/careers' ? 'text-primary font-semibold' : 'text-on-surface-variant hover:text-primary'}`}
+              >
+                加入我们
+              </Link>
+              <Link
+                to="/contact"
+                className={`text-sm md:text-base transition-colors ${path === '/contact' ? 'text-primary font-semibold' : 'text-on-surface-variant hover:text-primary'}`}
+              >
+                联系我们
+              </Link>
+            </nav>
+
+            {/* Right Quick Actions */}
+            <div className="flex items-center gap-3">
+              <Link
+                to="/careers"
+                className="hidden sm:inline-flex bg-primary-container text-on-primary px-4 py-2 rounded-lg text-sm font-semibold hover:bg-primary transition-colors"
+              >
+                查看职位
+              </Link>
+              
+              {/* Profile icon preview */}
+              <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary">
+                <span className="material-symbols-outlined text-[18px]">person</span>
+              </div>
+
+              {/* Mobile hamburger menu toggle */}
+              <button
+                type="button"
+                aria-label="打开菜单"
+                className="md:hidden w-10 h-10 flex items-center justify-center text-primary rounded-lg active:bg-surface-container"
+                onClick={onOpenMobileMenu}
+              >
+                <span className="material-symbols-outlined text-[24px]">menu</span>
+              </button>
+            </div>
+          </div>
+        </header>
+      );
+    }
+
+    // Shared Mobile Drawer Navigation
+    function MobileDrawer({ isOpen, onClose }) {
+      const location = useLocation();
+
+      if (!isOpen) return null;
+
+      return (
+        <div className="fixed inset-0 z-50 flex md:hidden">
+          <div className="fixed inset-0 bg-inverse-surface/40 backdrop-blur-sm" onClick={onClose} />
+          <aside className="relative w-4/5 max-w-xs h-full bg-surface-container-lowest shadow-2xl flex flex-col justify-between z-10">
+            <div>
+              <div className="h-16 px-4 flex items-center justify-between border-b border-surface-container">
+                <div className="flex items-center gap-2">
+                  <img src={LOGO_URL} alt="馨恒泰" className="h-7 w-auto object-contain" />
+                  <div className="flex flex-col">
+                    <span className="text-base text-primary leading-tight font-bold">馨恒泰</span>
+                    <span className="text-[10px] text-secondary leading-none uppercase tracking-wider">XHT Living</span>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={onClose}
+                  className="w-10 h-10 flex items-center justify-center rounded-lg text-secondary active:bg-surface-container"
+                >
+                  <span className="material-symbols-outlined text-[22px]">close</span>
+                </button>
+              </div>
+
+              <nav className="p-4 flex flex-col gap-1.5">
+                <Link
+                  to="/"
+                  onClick={onClose}
+                  className={`flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-semibold transition-colors ${
+                    location.pathname === '/' ? 'bg-primary text-on-primary' : 'text-on-surface-variant hover:bg-surface-container'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[20px]">home</span>
+                  <span>首页</span>
+                </Link>
+                <Link
+                  to="/about"
+                  onClick={onClose}
+                  className={`flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-semibold transition-colors ${
+                    location.pathname === '/about' ? 'bg-primary text-on-primary' : 'text-on-surface-variant hover:bg-surface-container'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[20px]">info</span>
+                  <span>关于我们</span>
+                </Link>
+                <Link
+                  to="/careers"
+                  onClick={onClose}
+                  className={`flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-semibold transition-colors ${
+                    location.pathname === '/careers' ? 'bg-primary text-on-primary' : 'text-on-surface-variant hover:bg-surface-container'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[20px]">group</span>
+                  <span>加入我们</span>
+                </Link>
+                <Link
+                  to="/contact"
+                  onClick={onClose}
+                  className={`flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-semibold transition-colors ${
+                    location.pathname === '/contact' ? 'bg-primary text-on-primary' : 'text-on-surface-variant hover:bg-surface-container'
+                  }`}
+                >
+                  <span className="material-symbols-outlined text-[20px]">mail</span>
+                  <span>联系我们</span>
+                </Link>
+              </nav>
+            </div>
+
+            <div className="p-4 border-t border-surface-container bg-surface-container-low flex flex-col gap-2">
+              <div className="flex items-center gap-2 text-xs text-on-surface-variant">
+                <span className="material-symbols-outlined text-[16px] text-primary">mail</span>
+                <span className="font-mono">hr@xhthome.com</span>
+              </div>
+              <p className="text-[11px] text-secondary leading-tight">
+                上海馨恒泰家居有限公司 · 沪ICP备XXXXXXXX号 待确认
+              </p>
+            </div>
+          </aside>
+        </div>
+      );
+    }
+
+    // Shared Footer
+    function Footer() {
+      return (
+        <footer className="w-full bg-surface-container-low border-t border-secondary-fixed py-12 mt-auto">
+          <div className="max-w-7xl mx-auto px-6 lg:px-12">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-secondary-fixed">
+              <div className="md:col-span-6 space-y-3">
+                <div className="flex items-center gap-3">
+                  <img src={LOGO_URL} alt="XHT HOME" className="h-6 w-auto" />
+                  <h3 className="text-lg text-on-surface font-semibold tracking-tight">上海馨恒泰家居有限公司</h3>
+                </div>
+                <p className="text-sm text-on-surface-variant leading-relaxed max-w-lg">
+                  科技型精品家居跨境领军企业
+                </p>
+              </div>
+              <div className="md:col-span-3 space-y-2">
+                <div className="text-xs text-on-surface font-bold uppercase tracking-wider">快捷导航</div>
+                <div className="flex flex-col space-y-2 text-sm text-on-surface-variant">
+                  <Link to="/" className="hover:text-primary transition-colors">首页</Link>
+                  <Link to="/about" className="hover:text-primary transition-colors">关于我们</Link>
+                  <Link to="/careers" className="hover:text-primary transition-colors">加入我们</Link>
+                  <Link to="/contact" className="hover:text-primary transition-colors">联系我们</Link>
+                </div>
+              </div>
+              <div className="md:col-span-3 space-y-2">
+                <div className="text-xs text-on-surface font-bold uppercase tracking-wider">联系与联络</div>
+                <div className="space-y-1.5 text-sm text-on-surface-variant">
+                  <p>地址：上海市青浦区徐泾镇诸光路 1588 弄虹桥世界中心 L3 栋 A 座 502 室</p>
+                  <p>HR邮箱：hr@xhthome.com</p>
+                  <p>联系电话：021-60700977（待定）</p>
+                </div>
+              </div>
+            </div>
+            <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-secondary">
+              <p>© 上海馨恒泰家居有限公司 Shanghai Xinhengtai Home Living Co., Ltd. All Rights Reserved.</p>
+              <p>沪ICP备XXXXXXXX号 待确认</p>
+            </div>
+          </div>
+        </footer>
+      );
+    }
+
+    // ==========================================
+    // SCREEN 1 & 6: HOME PAGE COMPONENT
+    // ==========================================
+    function HomePage({ onNotify }) {
+      return (
+        <div className="w-full">
+          {/* Hero Section */}
+          <section className="w-full bg-surface-container-lowest">
+            <div className="w-full grid grid-cols-1 lg:grid-cols-12 min-h-[760px] lg:min-h-[760px]">
+              {/* Left 7 cols: Deep Green Brand Surface */}
+              <div className="lg:col-span-7 bg-primary-container px-6 sm:px-12 md:px-16 lg:pl-28 lg:pr-20 xl:pl-36 2xl:pl-48 py-14 lg:py-20 flex flex-col justify-center">
+                <div className="max-w-xl flex flex-col">
+                  <div className="inline-flex items-center gap-2 mb-4 self-start px-3 py-1 rounded-full bg-primary/40 text-on-primary-container text-xs font-medium tracking-wide">
+                    <span className="w-2 h-2 rounded-full bg-primary-fixed"></span>
+                    <span>科技型精品家居跨境领军企业</span>
+                  </div>
+                  <h1 className="text-3xl sm:text-4xl lg:text-5xl text-on-primary font-bold tracking-tight mb-5 leading-tight">
+                    馨启家居，恒达全球
+                  </h1>
+                  <p className="text-base lg:text-lg text-surface-container mb-8 leading-relaxed max-w-lg">
+                    Create warm home, Reach global
+                  </p>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <Link
+                      to="/about"
+                      className="inline-flex items-center justify-center bg-surface-container-lowest text-primary-container px-6 py-3 rounded-lg text-sm font-semibold hover:bg-surface-container-low transition-colors shadow-sm"
+                    >
+                      了解馨恒泰
+                    </Link>
+                    <Link
+                      to="/careers"
+                      className="inline-flex items-center justify-center border border-on-primary/60 text-on-primary px-6 py-3 rounded-lg text-sm font-semibold hover:bg-on-primary/10 transition-colors"
+                    >
+                      查看职业机会
+                    </Link>
+                  </div>
+                  <div className="mt-12 pt-6 border-t border-on-primary/15 grid grid-cols-3 gap-4">
+                    <div>
+                      <div className="text-xs text-surface-variant uppercase tracking-wider mb-1">企业定位</div>
+                      <div className="text-sm lg:text-base text-on-primary font-semibold">精品家居跨境营销</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-surface-variant uppercase tracking-wider mb-1">全球布局</div>
+                      <div className="text-sm lg:text-base text-on-primary font-semibold">全球化运营网络</div>
+                    </div>
+                    <div>
+                      <div className="text-xs text-surface-variant uppercase tracking-wider mb-1">市场覆盖</div>
+                      <div className="text-sm lg:text-base text-on-primary font-semibold">美国全域，深耕北美核心市场</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right 5 cols: Image Scene */}
+              <div className="lg:col-span-5 relative min-h-[300px] lg:min-h-full bg-surface-container">
+                <img
+                  alt="现代北欧极简实木餐桌椅家具场景"
+                  className="w-full h-full object-cover min-h-[300px]"
+                  src={HERO_IMAGE}
+                />
+                <div className="absolute bottom-4 right-4 bg-surface-container-lowest/90 px-3 py-1.5 rounded-lg shadow-sm backdrop-blur-sm text-xs text-secondary">
+                  示意场景 · 家具精选系列
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Core Business Capabilities */}
+          <section className="w-full bg-surface-container-lowest py-16 lg:py-24 border-b border-secondary-fixed">
+            <div className="max-w-7xl mx-auto px-6 lg:px-12">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-8 border-b border-secondary-fixed">
+                <div>
+                  <span className="text-xs uppercase tracking-widest text-secondary font-semibold">Core Capabilities</span>
+                  <h2 className="text-2xl lg:text-3xl text-on-surface font-bold tracking-tight mt-1">业务布局</h2>
+                </div>
+                <p className="text-sm text-on-surface-variant max-w-md">
+                  全域渠道・全链闭环・科技赋能
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 gap-4 pt-8">
+                {[
+                  ['01', '市场覆盖', '美国全域，深耕北美核心市场；', 'public'],
+                  ['02', '平台矩阵', 'Amazon、Wayfair、Walmart、Target、Lowes、Bestbuy 等头部平台；', 'storefront'],
+                  ['03', '物流体系', '西雅图、新泽西、亚特兰大、洛杉矶四大现代化仓储物流中心；', 'local_shipping'],
+                  ['04', '科技驱动', '自主设计研发 + 自研数字化系统 + AI 技术提效；', 'design_services'],
+                  ['05', '全链路管理', '生产—物流—仓储—销售全程可视化、数据化、智能化决策与执行。', 'account_tree']
+                ].map(([number, title, description, icon]) => (
+                  <div key={number} className="grid grid-cols-[auto_1fr] md:grid-cols-[72px_180px_1fr_auto] items-center gap-4 md:gap-6 p-5 md:px-6 bg-surface rounded-xl border border-secondary-fixed hover:shadow-md transition-shadow">
+                    <span className="text-xl font-bold text-primary font-mono">{number}</span>
+                    <h3 className="text-base font-semibold text-on-surface">{title}</h3>
+                    <p className="col-span-2 md:col-span-1 text-sm text-on-surface-variant leading-relaxed">{description}</p>
+                    <span className="material-symbols-outlined hidden md:block text-primary text-2xl">{icon}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Strategic Footprint / Global Architecture */}
+          <section className="w-full bg-surface-container py-16 lg:py-24 border-b border-secondary-fixed">
+            <div className="max-w-7xl mx-auto px-6 lg:px-12">
+              <div className="max-w-3xl mb-12 space-y-2">
+                <span className="text-xs uppercase tracking-widest text-secondary font-semibold">Global Footprint</span>
+                <h2 className="text-2xl lg:text-3xl text-on-surface font-bold tracking-tight">全球化运营网络</h2>
+                <p className="text-sm text-on-surface-variant">上海总部，广州、深圳、美国、中国香港设立分 / 子公司</p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+                <div className="lg:col-span-7 bg-surface-container-lowest p-6 lg:p-8 rounded-xl border border-secondary-fixed flex flex-col justify-between">
+                  <div className="space-y-4">
+                    <div className="p-4 rounded-lg bg-surface border border-secondary-fixed flex items-start gap-4">
+                      <div className="w-10 h-10 rounded bg-primary-container text-on-primary flex items-center justify-center shrink-0">
+                        <span className="material-symbols-outlined text-[20px]">corporate_fare</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="text-sm font-semibold text-on-surface">上海总部</h4>
+                          <span className="text-xs px-2 py-0.5 rounded bg-primary-container text-on-primary">总部</span>
+                        </div>
+                        <p className="text-xs text-on-surface-variant">坐落于上海大虹桥核心板块，毗邻国家会展中心。</p>
+                      </div>
+                    </div>
+
+                    <div className="p-4 rounded-lg bg-surface border border-secondary-fixed flex items-start gap-4">
+                      <div className="w-10 h-10 rounded bg-primary text-on-primary flex items-center justify-center shrink-0">
+                        <span className="material-symbols-outlined text-[20px]">factory</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="text-sm font-semibold text-on-surface">广州与深圳</h4>
+                          <span className="text-xs px-2 py-0.5 rounded bg-surface-container text-on-surface-variant">分 / 子公司</span>
+                        </div>
+                        <p className="text-xs text-on-surface-variant">连接家居核心产区与跨境业务资源，实现协同运营。</p>
+                      </div>
+                    </div>
+
+                    <div className="p-4 rounded-lg bg-surface border border-secondary-fixed flex items-start gap-4">
+                      <div className="w-10 h-10 rounded bg-secondary text-on-primary flex items-center justify-center shrink-0">
+                        <span className="material-symbols-outlined text-[20px]">flight_takeoff</span>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-1">
+                          <h4 className="text-sm font-semibold text-on-surface">美国与中国香港</h4>
+                          <span className="text-xs px-2 py-0.5 rounded bg-surface-container text-secondary">分 / 子公司</span>
+                        </div>
+                        <p className="text-xs text-on-surface-variant">深耕美国全域及北美核心市场，完善全球化运营网络。</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 pt-4 border-t border-secondary-fixed flex items-center gap-2 text-secondary text-xs">
+                    <span className="material-symbols-outlined text-base">pin_drop</span>
+                    <span>西雅图、新泽西、亚特兰大、洛杉矶四大现代化仓储物流中心。</span>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-5 flex flex-col gap-6">
+                  <div className="bg-surface-container-lowest p-6 lg:p-8 rounded-xl border border-secondary-fixed flex-1 flex flex-col justify-between">
+                    <div className="space-y-4">
+                  <h3 className="text-base font-semibold text-on-surface">核心竞争优势</h3>
+                      <p className="text-sm text-on-surface-variant leading-relaxed">
+                    供应链、技术研发、渠道运营协同构筑全链路竞争力，年销售额持续稳步式增长，多个核心品类稳居 Best Seller。
+                      </p>
+                      <div className="space-y-2 pt-2">
+                        <div className="flex items-center gap-2 text-xs text-on-surface">
+                          <span className="material-symbols-outlined text-primary text-base">check_circle</span>
+                    <span>供应链壁垒：世家底蕴 + 自有产业基地 + 全国核心产区合作，品质 / 成本 / 交付三重保障；</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-on-surface">
+                          <span className="material-symbols-outlined text-primary text-base">check_circle</span>
+                    <span>技术研发壁垒：自主研发产品 + 自研管理系统 + AI智能运营，领跑行业；</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-on-surface">
+                          <span className="material-symbols-outlined text-primary text-base">check_circle</span>
+                    <span>渠道与运营壁垒：多平台全覆盖 + 本土化仓配 + 垂直精品运营，类目占有率稳居行业前列；</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-xs text-on-surface">
+                          <span className="material-symbols-outlined text-primary text-base">check_circle</span>
+                          <span>增长实力：年销售额持续稳步式增长，多个核心品类稳居 Best Seller。</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="mt-6 p-4 rounded-lg bg-surface border border-secondary-fixed text-xs text-on-surface">
+                  <span className="font-semibold text-primary">发展理念：</span>科技驱动、人才为本、供应链为基，实现高质量的可持续发展。
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Development Milestones */}
+          <section className="w-full bg-surface-container-lowest py-16 lg:py-24 border-b border-secondary-fixed">
+            <div className="max-w-7xl mx-auto px-6 lg:px-12">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-12 pb-6 border-b border-secondary-fixed">
+                <div>
+                  <span className="text-xs uppercase tracking-widest text-secondary font-semibold">Evolution & Path</span>
+                  <h2 className="text-2xl lg:text-3xl text-on-surface font-bold tracking-tight mt-1">发展与演进</h2>
+                </div>
+                <span className="text-xs text-secondary">扎实夯实每一步业务基础</span>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div className="flex flex-col pt-4 border-t-2 border-secondary-fixed hover:border-primary transition-colors">
+                  <div className="text-xs font-bold text-primary uppercase mb-1">阶段一</div>
+                  <h3 className="text-base font-semibold text-on-surface mb-2">创立起步 · 稳健奠基</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    确立跨境家居全链路出海战略，组建初创核心运营团队，并在上海建立公司首期协同基地。
+                  </p>
+                </div>
+                <div className="flex flex-col pt-4 border-t-2 border-secondary-fixed hover:border-primary transition-colors">
+                  <div className="text-xs font-bold text-primary uppercase mb-1">阶段二</div>
+                  <h3 className="text-base font-semibold text-on-surface mb-2">核心品类 · 规模破局</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    主打餐厅木系、客厅收纳与休闲沙发矩阵，实现单款月度出海破万单，确立良好海外买家口碑。
+                  </p>
+                </div>
+                <div className="flex flex-col pt-4 border-t-2 border-secondary-fixed hover:border-primary transition-colors">
+                  <div className="text-xs font-bold text-primary uppercase mb-1">阶段三</div>
+                  <h3 className="text-base font-semibold text-on-surface mb-2">精益供应链 · 纵深提效</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    深度捆绑华东核心家具制造工坊，建立高周转的柔性出厂标准及头程海运专线直达通道。
+                  </p>
+                </div>
+                <div className="flex flex-col pt-4 border-t-2 border-primary">
+                  <div className="text-xs font-bold text-primary uppercase mb-1 flex items-center gap-1">
+                    <span>阶段四</span>
+                    <span className="px-1.5 py-0.2 rounded bg-primary-fixed text-primary text-[10px]">进行中</span>
+                  </div>
+                  <h3 className="text-base font-semibold text-on-surface mb-2">品牌全球化 · 团队扩编</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    全面引进跨境产品、数字营销、外贸物流高层次人才，向全球化综合家居生活方式品牌迈进。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Team Culture & Value Grid */}
+          <section className="w-full bg-surface py-16 lg:py-24 border-b border-secondary-fixed">
+            <div className="max-w-7xl mx-auto px-6 lg:px-12">
+              <div className="max-w-3xl mb-12 space-y-2">
+                <span className="text-xs uppercase tracking-widest text-secondary font-semibold">Core Principles</span>
+                <h2 className="text-2xl lg:text-3xl text-on-surface font-bold tracking-tight">企业文化</h2>
+                <p className="text-sm text-on-surface-variant leading-relaxed">
+                  科技驱动、人才为本、供应链为基，实现高质量的可持续发展。
+                </p>
+              </div>
+
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 mb-12">
+                <div className="p-6 bg-surface-container-lowest rounded-xl border border-secondary-fixed shadow-sm">
+                  <div className="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary mb-3">
+                    <span className="material-symbols-outlined text-[20px]">verified_user</span>
+                  </div>
+                  <h3 className="text-base font-semibold text-on-surface mb-1">诚信</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">诚信、高效、创新、共赢</p>
+                </div>
+                <div className="p-6 bg-surface-container-lowest rounded-xl border border-secondary-fixed shadow-sm">
+                  <div className="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary mb-3">
+                    <span className="material-symbols-outlined text-[20px]">bolt</span>
+                  </div>
+                  <h3 className="text-base font-semibold text-on-surface mb-1">高效</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">助力中国家居智造走向世界</p>
+                </div>
+                <div className="p-6 bg-surface-container-lowest rounded-xl border border-secondary-fixed shadow-sm">
+                  <div className="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary mb-3">
+                    <span className="material-symbols-outlined text-[20px]">lightbulb</span>
+                  </div>
+                  <h3 className="text-base font-semibold text-on-surface mb-1">创新</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">自主设计研发 + 自研数字化系统 + AI 技术提效</p>
+                </div>
+                <div className="p-6 bg-surface-container-lowest rounded-xl border border-secondary-fixed shadow-sm">
+                  <div className="w-8 h-8 rounded bg-surface-container flex items-center justify-center text-primary mb-3">
+                    <span className="material-symbols-outlined text-[20px]">handshake</span>
+                  </div>
+                  <h3 className="text-base font-semibold text-on-surface mb-1">共赢</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">链接全球，智造美好</p>
+                </div>
+              </div>
+
+              {/* Callout Recruitment Action Card */}
+              <div className="p-8 lg:p-12 rounded-2xl bg-primary-container text-on-primary shadow-md flex flex-col md:flex-row items-center justify-between gap-6">
+                <div className="space-y-2 max-w-xl">
+                  <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary-fixed uppercase tracking-wider">
+                    <span className="w-2 h-2 rounded-full bg-primary-fixed"></span>
+                    We Are Hiring / 聚才同心，恒赴新程
+                  </div>
+                  <h3 className="text-2xl font-bold">一起开启有前途的未来</h3>
+                  <p className="text-sm text-surface-container leading-relaxed">
+                    Gather talents, March toward new journeys
+                  </p>
+                </div>
+                <div className="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                  <Link
+                    to="/careers"
+                    className="w-full sm:w-auto px-6 py-3 rounded-lg bg-surface-container-lowest text-primary font-semibold text-sm hover:bg-surface-container transition-colors text-center"
+                  >
+                    查看在招岗位
+                  </Link>
+                  <Link
+                    to="/contact"
+                    className="w-full sm:w-auto px-6 py-3 rounded-lg border border-on-primary/60 text-on-primary font-semibold text-sm hover:bg-on-primary/10 transition-colors text-center"
+                  >
+                    商务沟通
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    // ==========================================
+    // SCREEN 5: ABOUT US PAGE COMPONENT
+    // ==========================================
+    function AboutPage() {
+      return (
+        <div className="w-full">
+          {/* Header Banner */}
+          <section className="w-full bg-surface-container py-16 px-6 lg:px-12 border-b border-secondary-fixed">
+            <div className="max-w-7xl mx-auto space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded bg-surface-container-high text-primary text-xs font-semibold uppercase">
+                <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                ABOUT XHT HOME / 科技型精品家居跨境领军企业
+              </div>
+              <h1 className="text-3xl lg:text-4xl text-on-surface font-bold tracking-tight max-w-4xl">
+                上海馨恒泰家居有限公司
+              </h1>
+              <p className="text-base text-on-surface-variant max-w-3xl leading-relaxed">
+                上海馨恒泰家居有限公司（前身上海常泰家居有限公司）创立于 2005 年，是一家以科技创新为核心的精品家具跨境营销企业。总部坐落于上海大虹桥核心板块，毗邻国家会展中心，区位优越、交通便捷；全球布局：广州、深圳、美国、中国香港设立分 / 子公司，实现全球化运营网络。
+                <br /><br />
+                核心基因：供应链世家掌舵，创始人拥有苏州 100 亩 + 产业基地，对生产、供应链、产品研发与行业趋势具备行业领先的把控力，工厂覆盖江苏、广东、福建等家居核心产区。
+              </p>
+            </div>
+          </section>
+
+          {/* Capability Matrix Detailed */}
+          <section className="w-full bg-surface-container-lowest py-16 lg:py-20 px-6 lg:px-12 border-b border-secondary-fixed">
+            <div className="max-w-7xl mx-auto space-y-12">
+              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 pb-6 border-b border-secondary-fixed">
+                <div>
+                  <span className="text-xs uppercase tracking-wider text-primary font-semibold">Capability Matrix</span>
+                  <h2 className="text-2xl lg:text-3xl text-on-surface font-bold mt-1">核心优势</h2>
+                </div>
+                <p className="text-sm text-secondary max-w-md">
+                  供应链、技术研发、渠道运营协同构筑全链路竞争力。
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8">
+                {/* Cap 1 */}
+                <div className="bg-surface-container-low p-8 rounded-lg flex flex-col justify-between space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+                        <span className="material-symbols-outlined text-2xl">draw</span>
+                      </span>
+                      <span className="text-xl text-secondary font-mono font-bold">01</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-on-surface">供应链壁垒</h3>
+                    <p className="text-sm text-on-surface-variant leading-relaxed">
+                      世家底蕴 + 自有产业基地 + 全国核心产区合作，品质 / 成本 / 交付三重保障。
+                    </p>
+                    <div className="space-y-2 pt-3 border-t border-secondary-fixed text-xs text-on-surface">
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>世家底蕴与自有产业基地</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>全国核心产区合作</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>品质 / 成本 / 交付三重保障</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="inline-block px-2.5 py-1 rounded bg-surface-container text-xs text-primary font-medium">供应链壁垒</span>
+                  </div>
+                </div>
+
+                {/* Cap 2 */}
+                <div className="bg-surface-container-low p-8 rounded-lg flex flex-col justify-between space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+                        <span className="material-symbols-outlined text-2xl">precision_manufacturing</span>
+                      </span>
+                      <span className="text-xl text-secondary font-mono font-bold">02</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-on-surface">技术研发壁垒</h3>
+                    <p className="text-sm text-on-surface-variant leading-relaxed">
+                      自主研发产品 + 自研管理系统 + AI智能运营，领跑行业。
+                    </p>
+                    <div className="space-y-2 pt-3 border-t border-secondary-fixed text-xs text-on-surface">
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>自主研发产品</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>自研管理系统</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>AI智能运营</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="inline-block px-2.5 py-1 rounded bg-surface-container text-xs text-primary font-medium">技术研发壁垒</span>
+                  </div>
+                </div>
+
+                {/* Cap 3 */}
+                <div className="bg-surface-container-low p-8 rounded-lg flex flex-col justify-between space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+                        <span className="material-symbols-outlined text-2xl">local_shipping</span>
+                      </span>
+                      <span className="text-xl text-secondary font-mono font-bold">03</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-on-surface">渠道与运营壁垒</h3>
+                    <p className="text-sm text-on-surface-variant leading-relaxed">
+                      多平台全覆盖 + 本土化仓配 + 垂直精品运营，类目占有率稳居行业前列。
+                    </p>
+                    <div className="space-y-2 pt-3 border-t border-secondary-fixed text-xs text-on-surface">
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>多平台全覆盖</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>本土化仓配</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>垂直精品运营</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="inline-block px-2.5 py-1 rounded bg-surface-container text-xs text-primary font-medium">渠道与运营壁垒</span>
+                  </div>
+                </div>
+
+                {/* Cap 4 */}
+                <div className="bg-surface-container-low p-8 rounded-lg flex flex-col justify-between space-y-6">
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="w-12 h-12 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+                        <span className="material-symbols-outlined text-2xl">trending_up</span>
+                      </span>
+                      <span className="text-xl text-secondary font-mono font-bold">04</span>
+                    </div>
+                    <h3 className="text-lg font-semibold text-on-surface">增长实力</h3>
+                    <p className="text-sm text-on-surface-variant leading-relaxed">
+                      年销售额持续稳步式增长，多个核心品类稳居 Best Seller。
+                    </p>
+                    <div className="space-y-2 pt-3 border-t border-secondary-fixed text-xs text-on-surface">
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>年销售额持续稳步式增长</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <span className="material-symbols-outlined text-primary text-sm mt-0.5">check_circle</span>
+                        <span>多个核心品类稳居 Best Seller</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <span className="inline-block px-2.5 py-1 rounded bg-surface-container text-xs text-primary font-medium">增长实力</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Culture & Office Environment */}
+          <section className="w-full bg-surface-container-low py-16 lg:py-20 px-6 lg:px-12 border-b border-secondary-fixed">
+            <div className="max-w-7xl mx-auto space-y-12">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="lg:col-span-6 space-y-6">
+                  <div className="space-y-2">
+                    <span className="text-xs uppercase tracking-wider text-primary font-semibold">Corporate Culture</span>
+                    <h2 className="text-2xl lg:text-3xl text-on-surface font-bold">企业文化</h2>
+                    <p className="text-sm text-on-surface-variant leading-relaxed">
+                      科技驱动、人才为本、供应链为基，实现高质量的可持续发展。
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="bg-surface-container-lowest p-4 rounded-lg border border-secondary-fixed space-y-1">
+                      <div className="text-sm font-semibold text-primary flex items-center gap-1">
+                        <span className="material-symbols-outlined text-base">verified_user</span>
+                        诚信
+                      </div>
+                      <p className="text-xs text-secondary">诚信、高效、创新、共赢。</p>
+                    </div>
+                    <div className="bg-surface-container-lowest p-4 rounded-lg border border-secondary-fixed space-y-1">
+                      <div className="text-sm font-semibold text-primary flex items-center gap-1">
+                        <span className="material-symbols-outlined text-base">bolt</span>
+                        高效
+                      </div>
+                      <p className="text-xs text-secondary">链接全球，智造美好，成为全球家庭最信赖的家居品牌与行业标杆。</p>
+                    </div>
+                    <div className="bg-surface-container-lowest p-4 rounded-lg border border-secondary-fixed space-y-1">
+                      <div className="text-sm font-semibold text-primary flex items-center gap-1">
+                        <span className="material-symbols-outlined text-base">lightbulb</span>
+                        创新
+                      </div>
+                      <p className="text-xs text-secondary">助力中国家居智造走向世界，为全球家庭缔造高品质的居家生活。</p>
+                    </div>
+                    <div className="bg-surface-container-lowest p-4 rounded-lg border border-secondary-fixed space-y-1">
+                      <div className="text-sm font-semibold text-primary flex items-center gap-1">
+                        <span className="material-symbols-outlined text-base">handshake</span>
+                        共赢
+                      </div>
+                      <p className="text-xs text-secondary">科技驱动、人才为本、供应链为基。</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="lg:col-span-6 space-y-2">
+                  <div className="w-full rounded-xl overflow-hidden border border-secondary-fixed bg-surface-container shadow-sm">
+                    <img
+                      alt="馨恒泰跨国协作团队工作环境示意图"
+                      className="w-full h-[340px] md:h-[380px] object-cover"
+                      src={TEAM_IMAGE}
+                    />
+                  </div>
+                  <div className="flex items-center justify-between text-secondary text-xs px-1">
+                    <span>办公与研讨空间示意</span>
+                    <span>上海虹桥运营中心协同场景</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Compliance & Anti-Corruption */}
+          <section className="w-full bg-surface-container-lowest py-16 px-6 lg:px-12">
+            <div className="max-w-7xl mx-auto">
+              <div className="p-6 md:p-8 rounded-xl border border-secondary-fixed bg-surface-container-lowest space-y-6">
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-secondary-fixed">
+                  <div className="flex items-center gap-3">
+                    <span className="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+                      <span className="material-symbols-outlined text-2xl">gavel</span>
+                    </span>
+                    <div>
+                      <span className="text-xs text-primary uppercase font-semibold">Special Statement</span>
+                      <h3 className="text-lg text-on-surface font-semibold">廉政合规</h3>
+                    </div>
+                  </div>
+                  <div className="px-3 py-1 rounded bg-surface-container text-xs text-primary font-semibold self-start md:self-auto">
+                    法律与合规严肃专区
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+                  <div className="md:col-span-8 space-y-3">
+                    <p className="text-sm text-on-surface font-medium leading-relaxed">
+                      馨恒泰集团在与客户、业务伙伴等相关各方的业务关系中，致力遵循高标准的商业行为规范。
+                    </p>
+                    <p className="text-xs text-on-surface-variant leading-relaxed">
+                      我们要求员工在与外部合作伙伴进行业务往来时体现诚信的价值观，绝不容忍任何不道德或不合法的行为。合作伙伴的支持对我们非常重要，如果您有任何有关馨恒泰集团商业行为准则的问题，希望报告任何关于馨恒泰集团员工涉嫌作出不道德或不合法行为的可疑事件，欢迎您随时联系馨恒泰集团。
+                    </p>
+                    <p className="text-xs text-on-surface-variant leading-relaxed">
+                      我们建议任何人在提交投诉或问题时，留下包括姓名、联系方式、涉嫌不道德或不合法可疑行为事件细节等详细信息，以便我们在必要时直接和他／她联系。我们会谨慎处理所有咨询与举报，并在法律法规许可范围内竭尽全力确保咨询与举报的保密性。所有的调查将以合法合规为基础。馨恒泰集团严禁他人对任何善意地就涉嫌不道德或不合法行为提供信息或协助调查的人士，进行报复或惩罚。
+                    </p>
+                  </div>
+                  <div className="md:col-span-4 p-4 rounded-lg bg-surface-container-low border border-secondary-fixed space-y-2">
+                    <div className="text-sm text-on-surface font-semibold flex items-center gap-1.5">
+                      <span className="material-symbols-outlined text-base text-primary">contact_mail</span>
+                      监督与举报途径
+                    </div>
+                    <p className="text-xs text-secondary leading-relaxed">
+                      邮箱：hr@xhthome.com
+                    </p>
+                    <p className="text-[10px] text-outline pt-1">以上联络方法只适用于涉及馨恒泰集团员工诚信问题的咨询或举报。</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    // ==========================================
+    // SCREEN 2 & 4: CAREERS / RECRUITMENT PAGE
+    // ==========================================
+    const JOBS_DATA = [
+      {
+        id: "XHT-2024-OP01",
+        dept: "跨境业务部",
+        code: "XHT-OP-01",
+        title: "跨境电商运营主管（家居品类）",
+        location: "上海·青浦",
+        experience: "3-5年",
+        education: "本科及以上",
+        type: "全职",
+        tag: "重点招聘",
+        responsibilities: [
+          "负责北美与欧洲主流跨境电商平台（Amazon、Wayfair 等）家居大件类目店铺的日常全盘精细化运营与增长；",
+          "跟踪海外家居消费动向，制定核心产品 Listing 优化策略，包括视觉规划、关键词布局与本地化文案审核；",
+          "协同产品与供应链团队，管理安全库存周期与海运备货排期，有效保障全链路交付与健康动销周转率；",
+          "持续跟踪店铺运营数据（转化率、广告ROI、留评率），输出周期性复盘报告。"
+        ],
+        requirements: [
+          "统招本科及以上学历，英语 CET-6 或专业四级以上，具备优良的海外商务书面沟通与数据分析能力；",
+          "3 年及以上跨境电商大件家居、家具或收纳品类运营实战经验，拥有成功打造标杆爆款产品经验者优先；",
+          "具备清晰的逻辑思维、抗压能力与跨部门统筹沟通能力，认同制造业深耕与长期主义出海价值观；",
+          "认同务实求真、高效协同的企业文化。"
+        ]
+      },
+      {
+        id: "XHT-2024-DS02",
+        dept: "产品设计中心",
+        code: "XHT-RD-04",
+        title: "家居产品研发设计师",
+        location: "上海·青浦",
+        experience: "2-4年",
+        education: "大专及以上",
+        type: "全职",
+        tag: "设计研创",
+        responsibilities: [
+          "主导欧美生活方式家居收纳、功能小件系列产品的外观与结构创新设计；",
+          "负责从前期市场趋势研究、手绘概念草图到3D建模及工程出图全流程；",
+          "深入工厂车间对接模具开发与打样试产，跟进工艺打样、材质色彩及成本控制；",
+          "参与竞品拆解分析，持续针对海外客户使用痛点完成产品功能迭代。"
+        ],
+        requirements: [
+          "工业设计、产品设计等相关专业背景，具备独立成型的项目作品集；",
+          "熟练使用 Rhino、Keyshot、SolidWorks 等专业工业建模与渲染工具；",
+          "熟悉木质、金属、塑料或环保复合材料的加工工艺特性与量产结构规范；",
+          "对国际家居流行趋势与空间美学有良好审美嗅觉。"
+        ]
+      },
+      {
+        id: "XHT-2024-SC03",
+        dept: "供应链管理部",
+        code: "XHT-SC-02",
+        title: "跨境供应链计划专员",
+        location: "上海·青浦",
+        experience: "1-3年",
+        education: "本科及以上",
+        type: "全职",
+        tag: "运营制造",
+        responsibilities: [
+          "根据各电商渠道销售预测，制定科学的月度及季度生产采购计划；",
+          "紧密跟进国内代工厂生产排期与品控交期，确保出货交付节奏受控；",
+          "协同国际物流货代，调配海空运干线头程与欧美海外仓调拨调拨计划；",
+          "定期监控在途库存与海外仓积压风险，输出周转率分析表及降本方案。"
+        ],
+        requirements: [
+          "物流管理、供应链或统计学相关专业优先，具有跨境电商供应链经验者优先；",
+          "熟练掌握 Excel 高阶函数与数据透视分析，具备严密敏锐的数字逻辑；",
+          "抗压能力强，拥有出色的异常问题排查与跨部门进度协调推进能力；",
+          "工作踏实细致，认同合规稳健的经营理念。"
+        ]
+      }
+    ];
+
+    function CareersPage({ onNotify }) {
+      const [activeTab, setActiveTab] = useState('social');
+      const [selectedIdx, setSelectedIdx] = useState(0);
+
+      const handleTabSwitch = (tab) => {
+        if (tab === 'campus') {
+          onNotify('校招通道正在筹备中，近期敬请期待');
+          return;
+        }
+        setActiveTab(tab);
+      };
+
+      const copyEmail = (email) => {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(email);
+        }
+        onNotify('邮箱地址已复制到剪贴板: ' + email);
+      };
+
+      const handleApply = (job) => {
+        const subject = encodeURIComponent(`应聘：${job.title} - 姓名`);
+        const body = encodeURIComponent(`HR您好，\n\n我对贵司发布的【${job.title}】岗位非常感兴趣。以下为我的个人简历及联系方式：\n\n联系电话：\n求职意向：\n\n（附件已添加个人履历）`);
+        window.location.href = `mailto:hr@xhthome.com?subject=${subject}&body=${body}`;
+        onNotify('已为您调起邮件客户端');
+      };
+
+      const currentJob = JOBS_DATA[selectedIdx];
+
+      return (
+        <div className="w-full">
+          {/* Header Section */}
+          <section className="w-full bg-surface-container-low px-6 lg:px-12 pt-12 pb-16 border-b border-secondary-fixed">
+            <div className="max-w-7xl mx-auto space-y-4">
+              <div className="inline-flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary"></span>
+                <span className="text-xs text-primary tracking-wider font-semibold uppercase">CAREERS / 人才招聘</span>
+              </div>
+              <h1 className="text-3xl lg:text-4xl text-on-surface font-bold tracking-tight">
+                聚才同心，恒赴新程
+              </h1>
+              <p className="text-base text-secondary max-w-2xl">
+                Gather talents, March toward new journeys · 一起开启有前途的未来
+              </p>
+
+              {/* Stats Bar */}
+              <div className="grid grid-cols-3 gap-3 max-w-xl mt-6 pt-4 bg-surface-container-lowest rounded-xl p-4 shadow-sm">
+                <div className="flex flex-col items-center justify-center p-2">
+                  <span className="text-lg lg:text-xl text-primary font-bold">社会招聘</span>
+                  <span className="text-xs text-secondary">在招岗位列表</span>
+                </div>
+                <div className="flex flex-col items-center justify-center p-2 bg-surface-container-low rounded-lg">
+                  <span className="text-lg lg:text-xl text-primary font-bold">校园招聘</span>
+                  <span className="text-xs text-secondary">管培生与应届生</span>
+                </div>
+                <div className="flex flex-col items-center justify-center p-2">
+                  <span className="text-lg lg:text-xl text-primary font-bold">投递渠道</span>
+                  <span className="text-xs text-secondary">待正式确认</span>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Scope Filters */}
+          <section className="w-full bg-surface-container-lowest px-6 lg:px-12 pt-8 pb-4">
+            <div className="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4">
+              <div className="flex items-center gap-2 bg-surface-container-high p-1 rounded-xl w-fit">
+                <button
+                  type="button"
+                  onClick={() => handleTabSwitch('social')}
+                  className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
+                    activeTab === 'social' ? 'bg-primary text-on-primary shadow-sm' : 'text-secondary hover:text-on-surface'
+                  }`}
+                >
+                  社会招聘 (3)
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleTabSwitch('campus')}
+                  className={`px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
+                    activeTab === 'campus' ? 'bg-primary text-on-primary shadow-sm' : 'text-secondary hover:text-on-surface'
+                  }`}
+                >
+                  校园招聘 (筹)
+                </button>
+              </div>
+
+              <div className="flex items-center gap-2 text-xs text-secondary bg-surface-container-low p-2 rounded-lg">
+                <span className="material-symbols-outlined text-[18px] text-secondary">info</span>
+                <span>声明：当前展示职位为企业组织架构规划示例，投递流程以届时集团正式公告为准。</span>
+              </div>
+            </div>
+          </section>
+
+          {/* Master-Detail Interactive Job Listing */}
+          <section className="w-full bg-surface-container-lowest px-6 lg:px-12 pb-16">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              {/* Left Column: Job Cards */}
+              <div className="lg:col-span-5 flex flex-col gap-4">
+                {JOBS_DATA.map((job, idx) => {
+                  const isSelected = selectedIdx === idx;
+                  return (
+                    <div
+                      key={job.id}
+                      onClick={() => setSelectedIdx(idx)}
+                      className={`cursor-pointer p-6 rounded-xl transition-all duration-200 border ${
+                        isSelected
+                          ? 'bg-surface-container-low border-primary shadow-sm'
+                          : 'bg-surface-container-lowest border-secondary-fixed hover:bg-surface-container-low/60'
+                      }`}
+                    >
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <div>
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs px-2 py-0.5 rounded bg-surface-container text-primary font-semibold">
+                              {job.dept}
+                            </span>
+                            <span className="text-[11px] text-secondary">{job.code}</span>
+                          </div>
+                          <h3 className="text-base font-bold text-on-surface">
+                            {job.title}
+                          </h3>
+                        </div>
+                        <span
+                          className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 ${
+                            isSelected ? 'bg-primary-container text-on-primary' : 'bg-surface-container text-secondary'
+                          }`}
+                        >
+                          <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
+                        </span>
+                      </div>
+
+                      <div className="flex flex-wrap items-center gap-3 pt-3 text-xs text-secondary border-t border-secondary-fixed/50">
+                        <span className="flex items-center gap-0.5">
+                          <span className="material-symbols-outlined text-[14px]">location_on</span>
+                          {job.location}
+                        </span>
+                        <span className="flex items-center gap-0.5">
+                          <span className="material-symbols-outlined text-[14px]">schedule</span>
+                          {job.type}
+                        </span>
+                        <span className="flex items-center gap-0.5">
+                          <span className="material-symbols-outlined text-[14px]">work</span>
+                          {job.experience}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Right Column: Detail Inspector */}
+              <div className="lg:col-span-7 bg-surface-container-low p-6 lg:p-8 rounded-xl flex flex-col gap-6 shadow-sm border border-secondary-fixed">
+                <div className="flex flex-col gap-3 pb-4 border-b border-secondary-fixed">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="text-xs px-3 py-1 rounded bg-surface-container-high text-primary font-semibold">
+                      {currentJob.dept}
+                    </span>
+                    <span className="text-xs text-secondary">
+                      职位编号: {currentJob.id}
+                    </span>
+                  </div>
+                  <h2 className="text-xl lg:text-2xl text-on-surface font-bold">
+                    {currentJob.title}
+                  </h2>
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2">
+                    <div className="bg-surface-container-lowest p-2.5 rounded-lg flex flex-col">
+                      <span className="text-[11px] text-secondary">部门所属</span>
+                      <span className="text-xs font-semibold text-on-surface mt-0.5">{currentJob.dept}</span>
+                    </div>
+                    <div className="bg-surface-container-lowest p-2.5 rounded-lg flex flex-col">
+                      <span className="text-[11px] text-secondary">工作地点</span>
+                      <span className="text-xs font-semibold text-on-surface mt-0.5">{currentJob.location}</span>
+                    </div>
+                    <div className="bg-surface-container-lowest p-2.5 rounded-lg flex flex-col">
+                      <span className="text-[11px] text-secondary">经验要求</span>
+                      <span className="text-xs font-semibold text-on-surface mt-0.5">{currentJob.experience}</span>
+                    </div>
+                    <div className="bg-surface-container-lowest p-2.5 rounded-lg flex flex-col">
+                      <span className="text-[11px] text-secondary">学历要求</span>
+                      <span className="text-xs font-semibold text-on-surface mt-0.5">{currentJob.education}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Responsibilities */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-1.5 text-primary">
+                    <span className="material-symbols-outlined text-[18px]">assignment</span>
+                    <h4 className="text-sm font-bold text-on-surface">岗位职责</h4>
+                  </div>
+                  <ul className="space-y-1.5 pl-5 list-disc text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                    {currentJob.responsibilities.map((r, i) => (
+                      <li key={i}>{r}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Requirements */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-1.5 text-primary">
+                    <span className="material-symbols-outlined text-[18px]">verified_user</span>
+                    <h4 className="text-sm font-bold text-on-surface">任职要求</h4>
+                  </div>
+                  <ul className="space-y-1.5 pl-5 list-disc text-xs sm:text-sm text-on-surface-variant leading-relaxed">
+                    {currentJob.requirements.map((r, i) => (
+                      <li key={i}>{r}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Action Area */}
+                <div className="bg-surface-container-lowest p-4 rounded-xl flex flex-col gap-3 mt-2 border border-secondary-fixed">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={() => handleApply(currentJob)}
+                      className="bg-primary-container text-on-primary px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary transition-colors flex items-center justify-center gap-2 shadow-sm"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">mail</span>
+                      <span>申请该岗位</span>
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => copyEmail('hr@xhthome.com')}
+                      className="text-xs text-primary font-semibold flex items-center gap-1 hover:underline"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">content_copy</span>
+                      <span>复制 HR 邮箱：hr@xhthome.com</span>
+                    </button>
+                  </div>
+                  <p className="text-[11px] text-secondary leading-relaxed">
+                    投递说明：当前岗位为概念模拟示范，正式投递渠道待确认，届时以集团正式公告为准。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Working Environment Pillars */}
+          <section className="w-full bg-surface-container-high py-16 px-6 lg:px-12 border-t border-secondary-fixed">
+            <div className="max-w-7xl mx-auto space-y-8">
+              <div className="space-y-1 max-w-xl">
+                <span className="text-xs uppercase tracking-wider text-primary font-semibold">Working Environment</span>
+                <h2 className="text-2xl text-on-surface font-bold tracking-tight">务实、成长与坦诚协作的组织土壤</h2>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-surface-container-lowest p-6 rounded-xl flex flex-col gap-3">
+                  <span className="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+                    <span className="material-symbols-outlined text-[24px]">trending_up</span>
+                  </span>
+                  <h3 className="text-base font-semibold text-on-surface">业务赋能</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    深度接触跨境前沿业务全流程，参与从品类洞察、精细化选品到全球多仓流转，积累扎实出海实战经验。
+                  </p>
+                </div>
+                <div className="bg-surface-container-lowest p-6 rounded-xl flex flex-col gap-3">
+                  <span className="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+                    <span className="material-symbols-outlined text-[24px]">handshake</span>
+                  </span>
+                  <h3 className="text-base font-semibold text-on-surface">平等协作</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    坚持扁平高效的沟通机制。鼓励基于数据和业务事实讨论方案，倡导实干真抓、客观复盘。
+                  </p>
+                </div>
+                <div className="bg-surface-container-lowest p-6 rounded-xl flex flex-col gap-3">
+                  <span className="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center text-primary-container">
+                    <span className="material-symbols-outlined text-[24px]">shield</span>
+                  </span>
+                  <h3 className="text-base font-semibold text-on-surface">合规保障</h3>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    严格依法保障员工各项法定福利与休息权益。提供稳定规范的劳动关系体系，营造踏实长青的成长氛围。
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    // ==========================================
+    // SCREEN 3: CONTACT US PAGE COMPONENT
+    // ==========================================
+    function ContactPage({ onNotify }) {
+      const copyContent = (text, label) => {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text);
+        }
+        onNotify(`${label}已复制: ${text}`);
+      };
+
+      return (
+        <div className="w-full">
+          {/* Header Banner */}
+          <section className="w-full bg-surface-container py-14 px-6 lg:px-12 border-b border-secondary-fixed">
+            <div className="max-w-7xl mx-auto space-y-3">
+              <div className="inline-flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-primary"></span>
+                <span className="text-xs text-primary font-semibold uppercase tracking-widest">CONTACT US / 联络与问讯</span>
+              </div>
+              <h1 className="text-3xl lg:text-4xl text-on-surface font-bold tracking-tight">
+                期待与您建立真诚、稳固的连接
+              </h1>
+              <p className="text-base text-on-surface-variant max-w-2xl leading-relaxed">
+                无论是求职咨询、业务交流还是供应链合作探讨，我们都欢迎您的来讯。
+              </p>
+            </div>
+          </section>
+
+          {/* Main 2-Column Section */}
+          <section className="w-full bg-surface-container-lowest py-16 px-6 lg:px-12 border-b border-secondary-fixed">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+              {/* Left Column: Official Profile Details */}
+              <div className="lg:col-span-6 flex flex-col gap-8">
+                <div className="bg-surface-container-low p-6 rounded-xl border border-secondary-fixed space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs text-secondary uppercase font-semibold">Official Profile</span>
+                    <span className="bg-surface-variant text-primary text-xs px-2.5 py-0.5 rounded font-semibold">企业登记档案</span>
+                  </div>
+                  <h2 className="text-xl text-on-surface font-bold">上海馨恒泰家居有限公司</h2>
+                  <p className="text-xs text-secondary">Shanghai Xinhengtai Home Furnishing Co., Ltd.</p>
+                </div>
+
+                {/* Address Details */}
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 text-primary">
+                    <span className="material-symbols-outlined text-[20px]">location_on</span>
+                    <span className="text-base font-semibold text-on-surface">办公地址与入驻园区</span>
+                  </div>
+                  <div className="pl-7 space-y-2">
+                    <p className="text-sm font-semibold text-on-surface">
+                      上海市青浦区徐泾镇诸光路1588弄虹桥世界中心L3栋A座502室
+                    </p>
+                    <div className="bg-surface-container-low p-3.5 rounded-lg flex items-start gap-2.5 text-xs text-on-surface-variant">
+                      <span className="material-symbols-outlined text-secondary text-[18px] shrink-0 mt-0.5">commute</span>
+                      <p className="leading-relaxed">
+                        <strong className="text-on-surface">交通指引：</strong>紧邻国家会展中心，距轨交2号线徐泾东站 / 17号线诸光路站步行可达，虹桥交通枢纽便利直达。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Contacts Matrix */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pl-7">
+                  <div className="bg-surface-container-low p-4 rounded-lg flex flex-col gap-1.5 border border-secondary-fixed">
+                    <div className="flex items-center gap-1.5 text-primary text-xs font-semibold">
+                      <span className="material-symbols-outlined text-[16px]">badge</span>
+                      <span>人才招聘专线 / HR邮箱</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => copyContent('hr@xhthome.com', 'HR邮箱')}
+                      className="text-left font-mono font-bold text-sm text-primary hover:underline"
+                    >
+                      hr@xhthome.com
+                    </button>
+                    <p className="text-[11px] text-secondary">仅用于求职与人才事务沟通</p>
+                  </div>
+
+                  <div className="bg-surface-container-low p-4 rounded-lg flex flex-col gap-1.5 border border-secondary-fixed">
+                    <div className="flex items-center gap-1.5 text-primary text-xs font-semibold">
+                      <span className="material-symbols-outlined text-[16px]">call</span>
+                      <span>公司总机电话</span>
+                    </div>
+                    <div className="font-mono font-bold text-sm text-on-surface">
+                      021-60700977
+                    </div>
+                    <p className="text-[11px] text-outline flex items-center gap-0.5">
+                      <span className="material-symbols-outlined text-[12px]">info</span>
+                      <span>[待进一步确认核准]</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Working hours & Notice */}
+                <div className="pl-7 space-y-3">
+                  <div className="flex items-center gap-2 text-xs text-on-surface-variant">
+                    <span className="material-symbols-outlined text-secondary text-[18px]">schedule</span>
+                    <span>工作时间：周一至周五 09:00 - 18:00（法定节假日除外）</span>
+                  </div>
+
+                  <div className="bg-surface-variant p-4 rounded-lg flex items-start gap-2.5 text-xs">
+                    <span className="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">verified_user</span>
+                    <div className="space-y-0.5">
+                      <span className="font-semibold text-primary">官方渠道声明与重要提示</span>
+                      <p className="text-on-surface-variant leading-relaxed">
+                        本站暂未开通线上商务咨询直连，合规及商务联络渠道待官方进一步确认公告。谨防任何未经授权的第三方中介或商业接洽声称。
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Vector Road & Landmark Diagram */}
+              <div className="lg:col-span-6 flex flex-col gap-6">
+                <div className="w-full bg-surface-container-low rounded-xl p-6 border border-secondary-fixed flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-primary font-semibold text-sm">
+                      <span className="material-symbols-outlined text-[20px]">explore</span>
+                      <span className="text-on-surface">区域路网与枢纽坐标示意</span>
+                    </div>
+                    <span className="text-xs text-secondary bg-surface-container px-2 py-0.5 rounded font-mono">SHANGHAI HQ</span>
+                  </div>
+
+                  {/* SVG Map Visualization */}
+                  <div className="w-full aspect-[4/3] bg-surface-container rounded-lg overflow-hidden border border-secondary-fixed relative flex items-center justify-center">
+                    <svg className="w-full h-full" fill="none" viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+                      <rect fill="#E4F1E7" height="450" width="600"></rect>
+                      <path d="M0 75H600M0 150H600M0 225H600M0 300H600M0 375H600" stroke="#D9E6DC" strokeDasharray="4 4" strokeWidth="1"></path>
+                      <path d="M100 0V450M200 0V450M300 0V450M400 0V450M500 0V450" stroke="#D9E6DC" strokeDasharray="4 4" strokeWidth="1"></path>
+                      
+                      {/* Songze Ave */}
+                      <rect fill="#D0DDD4" height="38" width="600" x="0" y="85"></rect>
+                      <line stroke="#FFFFFF" strokeDasharray="8 6" strokeWidth="2" x1="0" x2="600" y1="104" y2="104"></line>
+                      <text fill="#57615B" fontFamily="Inter" fontSize="12" fontWeight="600" letterSpacing="1" x="30" y="109">崧泽大道 / SONGZE AVE.</text>
+
+                      {/* Zhuguang Rd */}
+                      <rect fill="#D0DDD4" height="450" width="44" x="210" y="0"></rect>
+                      <line stroke="#FFFFFF" strokeDasharray="8 6" strokeWidth="2" x1="232" x2="232" y1="0" y2="450"></line>
+                      <text fill="#57615B" fontFamily="Inter" fontSize="12" fontWeight="600" letterSpacing="1" transform="rotate(-90 237 420)" x="237" y="420">诸光路 / ZHUGUANG RD.</text>
+
+                      {/* Yinggang East Rd */}
+                      <rect fill="#D0DDD4" height="28" width="600" x="0" y="340"></rect>
+                      <text fill="#57615B" fontFamily="Inter" fontSize="11" fontWeight="500" x="30" y="358">盈港东路</text>
+
+                      {/* NECC Clover */}
+                      <g transform="translate(320, 150)">
+                        <rect fill="#DFEBE2" height="240" rx="6" width="230"></rect>
+                        <text fill="#2C3B32" fontFamily="Inter" fontSize="13" fontWeight="700" x="20" y="32">国家会展中心 (NECC)</text>
+                        <text fill="#57615B" fontFamily="Inter" fontSize="10" x="20" y="50">National Exhibition & Convention Center</text>
+                        <circle cx="85" cy="130" fill="#CAD9CE" fillOpacity="0.6" r="32"></circle>
+                        <circle cx="145" cy="130" fill="#CAD9CE" fillOpacity="0.6" r="32"></circle>
+                        <circle cx="115" cy="100" fill="#CAD9CE" fillOpacity="0.6" r="32"></circle>
+                        <circle cx="115" cy="160" fill="#CAD9CE" fillOpacity="0.6" r="32"></circle>
+                        <circle cx="115" cy="130" fill="#2C5742" fillOpacity="0.2" r="14"></circle>
+                        <rect fill="#FFFFFF" height="20" rx="3" width="105" x="20" y="205"></rect>
+                        <text fill="#13402C" fontFamily="Inter" fontSize="10" fontWeight="600" x="28" y="219">轨交2号线 徐泾东站</text>
+                      </g>
+
+                      {/* Metro Line 17 */}
+                      <g transform="translate(195, 30)">
+                        <circle cx="37" cy="15" fill="#2C5742" r="12"></circle>
+                        <circle cx="37" cy="15" fill="#FFFFFF" r="5"></circle>
+                        <rect fill="#FFFFFF" height="20" rx="3" width="70" x="-80" y="5"></rect>
+                        <text fill="#13402C" fontFamily="Inter" fontSize="10" fontWeight="600" x="-74" y="19">17号线诸光路</text>
+                      </g>
+
+                      {/* Hongqiao World Center */}
+                      <g transform="translate(45, 150)">
+                        <rect fill="#FFFFFF" height="155" rx="8" width="145"></rect>
+                        <rect fill="#EAF7ED" height="143" rx="4" width="133" x="6" y="6"></rect>
+                        <rect fill="#B9CBBF" height="48" rx="2" width="36" x="18" y="20"></rect>
+                        <rect fill="#B9CBBF" height="30" rx="2" width="65" x="62" y="20"></rect>
+                        
+                        {/* Selected Suite */}
+                        <rect fill="#13402C" height="56" rx="3" width="97" x="24" y="80"></rect>
+                        <text fill="#FFFFFF" fontFamily="Inter" fontSize="11" fontWeight="700" x="32" y="100">虹桥世界中心</text>
+                        <text fill="#A2D1B6" fontFamily="Inter" fontSize="10" fontWeight="600" x="32" y="115">L3栋 A座 502室</text>
+                        <text fill="#D5E7DA" fontFamily="Inter" fontSize="9" x="32" y="128">馨恒泰家居 XHT</text>
+                        
+                        <circle cx="125" cy="80" fill="#BA1A1A" r="7"></circle>
+                        <circle cx="125" cy="80" fill="#FFFFFF" r="3"></circle>
+                      </g>
+
+                      {/* Compass */}
+                      <g transform="translate(545, 30)">
+                        <circle cx="20" cy="20" fill="#FFFFFF" fillOpacity="0.8" r="16"></circle>
+                        <path d="M20 7L24 20H16L20 7Z" fill="#13402C"></path>
+                        <path d="M20 33L16 20H24L20 33Z" fill="#717973"></path>
+                        <text fill="#13402C" fontFamily="Inter" fontSize="9" fontWeight="700" x="17.5" y="6">N</text>
+                      </g>
+                    </svg>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
+                    <div className="flex items-center gap-2 text-xs text-on-surface">
+                      <span className="w-2.5 h-2.5 rounded-sm bg-primary"></span>
+                      <span>虹桥世界中心 L3栋 A座 502室</span>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => onNotify('外部地图导航接口升级接入中')}
+                      className="text-xs bg-surface-variant text-secondary px-3 py-1.5 rounded flex items-center gap-1 hover:bg-surface-container-high transition-colors"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">near_me</span>
+                      <span>在地图中查看（模拟导航）</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Hub Metrics */}
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="bg-surface-container-low p-3 rounded-lg flex flex-col items-center text-center border border-secondary-fixed">
+                    <span className="text-[11px] text-secondary">距虹桥综合枢纽</span>
+                    <span className="text-xs font-bold text-primary mt-1">约 10 分钟车程</span>
+                  </div>
+                  <div className="bg-surface-container-low p-3 rounded-lg flex flex-col items-center text-center border border-secondary-fixed">
+                    <span className="text-[11px] text-secondary">国家会展中心距离</span>
+                    <span className="text-xs font-bold text-primary mt-1">隔路相望 / 步行达</span>
+                  </div>
+                  <div className="bg-surface-container-low p-3 rounded-lg flex flex-col items-center text-center border border-secondary-fixed">
+                    <span className="text-[11px] text-secondary">双轨交覆盖保障</span>
+                    <span className="text-xs font-bold text-primary mt-1">2号线 / 17号线</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Email Inquiry Notice */}
+          <section className="w-full bg-surface py-12 px-6 lg:px-12">
+            <div className="max-w-5xl mx-auto bg-surface-container-lowest rounded-xl p-6 lg:p-8 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border border-secondary-fixed">
+              <div className="flex items-start gap-4 max-w-2xl">
+                <div className="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center shrink-0 text-primary">
+                  <span className="material-symbols-outlined text-[26px]">mark_email_read</span>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-bold text-on-surface">来信对接与时效须知</h3>
+                    <span className="bg-surface-container-high text-primary text-[10px] px-2 py-0.5 rounded font-semibold">响应时间待确认</span>
+                  </div>
+                  <p className="text-xs text-on-surface-variant leading-relaxed">
+                    招聘咨询可通过 HR 邮箱联系；其他联络渠道与响应时间以上线前正式确认的信息为准。
+                  </p>
+                </div>
+              </div>
+              <a
+                href="mailto:hr@xhthome.com"
+                className="bg-primary text-on-primary px-6 py-2.5 rounded-lg text-sm font-semibold hover:bg-primary-container transition-colors flex items-center gap-2 shrink-0 self-stretch md:self-auto justify-center"
+              >
+                <span className="material-symbols-outlined text-[18px]">send</span>
+                <span>发送邮件</span>
+              </a>
+            </div>
+          </section>
+        </div>
+      );
+    }
+
+    // ==========================================
+    // MAIN APP COMPONENT WITH MEMORYROUTER
+    // ==========================================
+    function App() {
+      const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+      const [toastMsg, setToastMsg] = useState('');
+      const [toastVisible, setToastVisible] = useState(false);
+
+      const triggerNotification = (msg) => {
+        setToastMsg(msg);
+        setToastVisible(true);
+        setTimeout(() => {
+          setToastVisible(false);
+        }, 2600);
+      };
+
+      return (
+        <div className="flex flex-col min-h-screen bg-surface">
+          <Header onOpenMobileMenu={() => setMobileMenuOpen(true)} />
+          <MobileDrawer isOpen={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+          <Toast message={toastMsg} visible={toastVisible} />
+
+          <main className="flex-1 w-full pt-16 md:pt-20">
+            <Routes>
+              <Route path="/" element={<HomePage onNotify={triggerNotification} />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/careers" element={<CareersPage onNotify={triggerNotification} />} />
+              <Route path="/contact" element={<ContactPage onNotify={triggerNotification} />} />
+              {/* Fallback to Home */}
+              <Route path="*" element={<HomePage onNotify={triggerNotification} />} />
+            </Routes>
+          </main>
+
+          <Footer />
+        </div>
+      );
+    }
+
+    // Wrap with MemoryRouter as explicitly specified
+    const container = document.getElementById('root');
+    const root = createRoot(container);
+    root.render(
+      <MemoryRouter initialEntries={["/"]}>
+        <App />
+      </MemoryRouter>
+    );
+  </script>
+</body>
+</html>

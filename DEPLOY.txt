@@ -1,0 +1,2 @@
+EdgeOne Pages direct upload package.
+Upload this folder itself so index.html stays at the project root.
