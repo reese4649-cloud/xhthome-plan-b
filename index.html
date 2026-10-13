@@ -109,9 +109,9 @@
     const { createRoot } = ReactDOM;
     const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
 
-    const LOGO_URL = "./assets/images/image-01.jpg";
-    const HERO_IMAGE = "./assets/images/image-02.jpg";
-    const TEAM_IMAGE = "./assets/images/image-03.jpg";
+    const LOGO_URL = "./assets/images/logo-transparent.png";
+    const HERO_IMAGE = "./assets/images/product-bed.jpg";
+    const TEAM_IMAGE = "./assets/images/team-outing.jpg";
 
     // Common Toast Alert Component
     function Toast({ message, visible }) {
@@ -276,7 +276,7 @@
                 <span className="font-mono">hr@xhthome.com</span>
               </div>
               <p className="text-[11px] text-secondary leading-tight">
-                上海馨恒泰家居有限公司 · 沪ICP备XXXXXXXX号 待确认
+                上海馨恒泰家居有限公司 · 沪ICP备2025153140号
               </p>
             </div>
           </aside>
@@ -319,7 +319,7 @@
             </div>
             <div className="pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-secondary">
               <p>© 上海馨恒泰家居有限公司 Shanghai Xinhengtai Home Living Co., Ltd. All Rights Reserved.</p>
-              <p>沪ICP备XXXXXXXX号 待确认</p>
+              <p>沪ICP备2025153140号</p>
             </div>
           </div>
         </footer>
@@ -382,12 +382,12 @@
               {/* Right 5 cols: Image Scene */}
               <div className="lg:col-span-5 relative min-h-[300px] lg:min-h-full bg-surface-container">
                 <img
-                  alt="现代北欧极简实木餐桌椅家具场景"
+                  alt="馨恒泰现代卧室家居产品场景"
                   className="w-full h-full object-cover min-h-[300px]"
                   src={HERO_IMAGE}
                 />
                 <div className="absolute bottom-4 right-4 bg-surface-container-lowest/90 px-3 py-1.5 rounded-lg shadow-sm backdrop-blur-sm text-xs text-secondary">
-                  示意场景 · 家具精选系列
+                  精品家居产品 · 卧室系列
                 </div>
               </div>
             </div>
@@ -531,35 +531,37 @@
 
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
                 <div className="flex flex-col pt-4 border-t-2 border-secondary-fixed hover:border-primary transition-colors">
-                  <div className="text-xs font-bold text-primary uppercase mb-1">阶段一</div>
-                  <h3 className="text-base font-semibold text-on-surface mb-2">创立起步 · 稳健奠基</h3>
+                  <div className="text-xs font-bold text-primary mb-1">起步期｜2005—2019</div>
+                  <h3 className="text-base font-semibold text-on-surface mb-2">供应链根基与产业积累</h3>
                   <p className="text-xs text-on-surface-variant leading-relaxed">
-                    确立跨境家居全链路出海战略，组建初创核心运营团队，并在上海建立公司首期协同基地。
+                    2005年：成立“上海常泰家居有限公司”（馨恒泰前身）。创始人拥有苏州100亩以上的产业基地，对生产、供应链及行业趋势具备深厚的把控力，合作工厂覆盖江苏、广东、福建等家居核心产区。
                   </p>
                 </div>
                 <div className="flex flex-col pt-4 border-t-2 border-secondary-fixed hover:border-primary transition-colors">
-                  <div className="text-xs font-bold text-primary uppercase mb-1">阶段二</div>
-                  <h3 className="text-base font-semibold text-on-surface mb-2">核心品类 · 规模破局</h3>
+                  <div className="text-xs font-bold text-primary mb-1">转型期｜2020—2022</div>
+                  <h3 className="text-base font-semibold text-on-surface mb-2">从传统供应链到跨境电商</h3>
                   <p className="text-xs text-on-surface-variant leading-relaxed">
-                    主打餐厅木系、客厅收纳与休闲沙发矩阵，实现单款月度出海破万单，确立良好海外买家口碑。
+                    2020年：公司正式组建电商团队，从传统家居供应链向跨境精品化运营转型，开启跨境电商业务。此后，公司业绩进入高速增长通道，年均增长率达到200%。
                   </p>
                 </div>
                 <div className="flex flex-col pt-4 border-t-2 border-secondary-fixed hover:border-primary transition-colors">
-                  <div className="text-xs font-bold text-primary uppercase mb-1">阶段三</div>
-                  <h3 className="text-base font-semibold text-on-surface mb-2">精益供应链 · 纵深提效</h3>
-                  <p className="text-xs text-on-surface-variant leading-relaxed">
-                    深度捆绑华东核心家具制造工坊，建立高周转的柔性出厂标准及头程海运专线直达通道。
-                  </p>
+                  <div className="text-xs font-bold text-primary mb-1">品牌期｜2023—2024</div>
+                  <h3 className="text-base font-semibold text-on-surface mb-2">新主体成立与全球化布局</h3>
+                  <div className="space-y-2 text-xs text-on-surface-variant leading-relaxed">
+                    <p>2023年：“上海馨恒泰家居有限公司”作为新运营主体于2023年8月正式注册，建立海外仓作为核心运营模式。</p>
+                    <p>2024年：公司进入快速扩张期，先后在广州、深圳、美国、中国香港设立分子公司，并在美国西雅图、新泽西、亚特兰大、洛杉矶布局现代化仓储物流中心。</p>
+                  </div>
                 </div>
                 <div className="flex flex-col pt-4 border-t-2 border-primary">
-                  <div className="text-xs font-bold text-primary uppercase mb-1 flex items-center gap-1">
-                    <span>阶段四</span>
-                    <span className="px-1.5 py-0.2 rounded bg-primary-fixed text-primary text-[10px]">进行中</span>
+                  <div className="text-xs font-bold text-primary mb-1">爆发期｜2025—至今</div>
+                  <h3 className="text-base font-semibold text-on-surface mb-2">多品类领跑、组织扩张与自研系统</h3>
+                  <div className="space-y-2 text-xs text-on-surface-variant leading-relaxed">
+                    <p>2025年：成立馨恒泰集团，与中远海运达成战略合作，助力业务加速发展。</p>
+                    <p>2026年：扩充系统研发团队，自研系统上线，提升各环节办公效率，助力业务快速发展。</p>
+                    <p>多平台多渠道全面发展，扩展跨境电商平台资源，快速提升市场占有率。</p>
+                    <p>在多个品类取得Best Seller排名领先优势，重点类目市场占有率超过10%。</p>
+                    <p>吸引大量高学历人才、跨境专业人才、海归人才加盟，打造更有冲击力的年轻团队。</p>
                   </div>
-                  <h3 className="text-base font-semibold text-on-surface mb-2">品牌全球化 · 团队扩编</h3>
-                  <p className="text-xs text-on-surface-variant leading-relaxed">
-                    全面引进跨境产品、数字营销、外贸物流高层次人才，向全球化综合家居生活方式品牌迈进。
-                  </p>
                 </div>
               </div>
             </div>
@@ -857,14 +859,14 @@
                 <div className="lg:col-span-6 space-y-2">
                   <div className="w-full rounded-xl overflow-hidden border border-secondary-fixed bg-surface-container shadow-sm">
                     <img
-                      alt="馨恒泰跨国协作团队工作环境示意图"
+                      alt="馨恒泰团队海边团建合照"
                       className="w-full h-[340px] md:h-[380px] object-cover"
                       src={TEAM_IMAGE}
                     />
                   </div>
                   <div className="flex items-center justify-between text-secondary text-xs px-1">
-                    <span>办公与研讨空间示意</span>
-                    <span>上海虹桥运营中心协同场景</span>
+                    <span>团队活动实景</span>
+                    <span>馨恒泰团队</span>
                   </div>
                 </div>
               </div>
